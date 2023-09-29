@@ -12,7 +12,7 @@
 <div class="container">
   <div th:replace="~{index :: menu}"></div>
   <h2>Lista de Tecnicos</h2>
-  <a class="btn btn-primary mt-4 mb-4" th:href="@{'/tecnico/nuevoEmpleado'}">Nuevo Empleado</a>
+  <a class="btn btn-primary mt-4 mb-4" th:href="@{'/tecnico/nuevoTecnico'}">Nuevo Empleado</a>
   <div th:if="${mensaje != null}" th:text="${mensaje}" class="alert alert-success" role="alert"></div>
   <table class="table table-sm">
     <tr>
@@ -23,7 +23,6 @@
       <th>DNI</th>
       <th>Telefono</th>
       <th></th>
-      <th></th>
     </tr>
     <tr th:each="tecnico, info: ${listaTecnicos}">
       <td th:text="${info.index + 1}"></td>
@@ -33,7 +32,6 @@
       <td th:text="${tecnico.dni}"></td>
       <td th:text="${tecnico.telefono}"></td>
       <td><a class="btn btn-primary" th:href="@{'/tecnico/editar?id=' + ${tecnico.idTecnico}}">Editar</a></td>
-      <td><a class="btn btn-danger" th:href="@{'/tecnico/borrar?id=' + ${tecnico.idTecnico}}">Borrar</a></td>
     </tr>
   </table>
 </div>

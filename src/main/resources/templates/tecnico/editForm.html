@@ -9,7 +9,7 @@
 <body>
 <main>
     <div class="container px-4 py-5">
-        <h2 th:text="${employee.getIdTecnico()==0? 'Nuevo Tecnico':'Editar Tecnico'}"></h2>
+        <h2 th:text="${tecnico.getIdTecnico()==0? 'Nuevo Tecnico':'Editar Tecnico'}"></h2>
         <hr/>
         <form method="post" th:action="@{'/tecnico/guardar'}" th:object="${tecnico}" class="mt-2">
             <input th:field="*{idTecnico}" name="idTecnico" type="hidden"/>

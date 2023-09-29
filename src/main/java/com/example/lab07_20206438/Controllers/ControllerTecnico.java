@@ -33,7 +33,7 @@ public class ControllerTecnico {
     }
 
     @GetMapping("/nuevoTecnico")
-    public String nuevoTecnico(Model model, @ModelAttribute("employee") Tecnico tecnico) {
+    public String nuevoTecnico(Model model, @ModelAttribute("tecnico") Tecnico tecnico) {
         model.addAttribute("listaTecnicos", tecnicoRepository.findAll());
         return "tecnico/editForm";
     }
