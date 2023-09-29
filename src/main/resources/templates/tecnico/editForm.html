@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <title>Editar - Agregar Técnico</title>
 </head>
 <body>
-
+<main>
+    <div class="container px-4 py-5">
+        <h2 th:text="${employee.getIdTecnico()==0? 'Nuevo Tecnico':'Editar Tecnico'}"></h2>
+        <hr/>
+        <form method="post" th:action="@{'/tecnico/guardar'}" th:object="${tecnico}" class="mt-2">
+            <input th:field="*{idTecnico}" name="idTecnico" type="hidden"/>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input th:field="*{firstName}" type="text" class="form-control"
+                       th:classappend="${#fields.hasErrors('firstName')?'is-invalid':''}"/>
+                <div id="validationServer03Feedback" class="invalid-feedback"
+                     th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido</label>
+                <input th:field="*{lastName}" type="text" th:class="${#fields.hasErrors('lastName')?'form-control is-invalid':'form-control'}"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Edad</label>
+                <input th:field="*{edad}" type="text" th:class="${#fields.hasErrors('edad')?'form-control is-invalid':'form-control'}"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">DNI</label>
+                <input th:field="*{dni}" type="text" th:class="${#fields.hasErrors('dni')?'form-control is-invalid':'form-control'}"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefono</label>
+                <input th:field="*{telefono}" type="text" th:class="${#fields.hasErrors('telefono')?'form-control is-invalid':'form-control'}"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">
+                </div>
+            </div>
+            <a th:href="@{'/tecnico'}" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary"
+                    th:text="${tecnico.idTecnico==0? 'Guardar':'Actualizar'}">Actualizar
+            </button>
+        </form>
+    </div>
+</main>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

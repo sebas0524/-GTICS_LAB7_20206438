@@ -24,7 +24,10 @@ public class Tecnico {
     private String lastName;
     @NotBlank(message = "No debe ser vacio o blanco")
     @Size(max= 25,message = "No puede tener más de 25 caracteres")
-    @Column(name="Email")
-    private String email;
+    @Column(name="Age")
+    private int edad;
+    @Column(name="Phone")
     private int telefono;
+    @Column(name="Dni")
+    private int dni;
 }

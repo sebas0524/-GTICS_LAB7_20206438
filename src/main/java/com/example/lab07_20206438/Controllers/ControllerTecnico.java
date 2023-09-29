@@ -26,80 +26,54 @@ public class ControllerTecnico {
         this.tecnicoRepository = tecnicoRepository;
     }
 
-    @GetMapping(value={"/lista",""})
-    public String listaTecnicos(Model model){
-        model.addAttribute("listaTecnicos",tecnicoRepository.findAll());
+    @GetMapping(value = {"/lista", ""})
+    public String listaTecnicos(Model model) {
+        model.addAttribute("listaTecnicos", tecnicoRepository.findAll());
         return "tecnico/lista";
     }
+
     @GetMapping("/nuevoTecnico")
-    public String nuevoEmpleado(Model model, @ModelAttribute("employee") Employee employee){
-        model.addAttribute("listaEmpleado",employeeRepository.findAll());
-        model.addAttribute("listaDepartamento",departmentRepository.findAll());
-        model.addAttribute("listaPuesto",jobRepository.findAll());
-        return "employee/editEmployee";
+    public String nuevoTecnico(Model model, @ModelAttribute("employee") Tecnico tecnico) {
+        model.addAttribute("listaTecnicos", tecnicoRepository.findAll());
+        return "tecnico/editForm";
     }
+
     @PostMapping("/guardar")
-    public String registrarEmpleado(RedirectAttributes attributes, Model model ,
-                                    @ModelAttribute("employee") @Valid Tecnico tecnico,
-                                    BindingResult bindingResult){
-        if(!bindingResult.hasErrors()){
-            if(tecnico.getId()==0){
-                System.out.println(employee.getFirstName());
-                attributes.addFlashAttribute("mensaje","Empleado creado exitosamente");
-            }else{
-                attributes.addFlashAttribute("mensaje","Empleado actualizado exitosamente");
+    public String registrarTecnico(RedirectAttributes attributes, Model model,
+                                   @ModelAttribute("tecnico") @Valid Tecnico tecnico,
+                                   BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            if (tecnico.getIdTecnico() == 0) {
+                attributes.addFlashAttribute("mensaje", "Tenico" + tecnico.getFirstName() + tecnico.getLastName() + "creado exitosamente");
+            } else {
+                attributes.addFlashAttribute("mensaje", "Tecnico" + tecnico.getFirstName() + tecnico.getLastName() + "actualizado exitosamente");
             }
-            employeeRepository.save(employee);
+            tecnicoRepository.save(tecnico);
 
-            return "redirect:/employee";
+            return "redirect:/tecnico";
 
-        }else{
-            model.addAttribute("employee",employee);
-            model.addAttribute("listaEmpleado",employeeRepository.findAll());
-            model.addAttribute("listaDepartamento",departmentRepository.findAll());
-            model.addAttribute("listaPuesto",jobRepository.findAll());
-            return "employee/editEmployee";
+        } else {
+            model.addAttribute("employee", tecnico);
+            model.addAttribute("listaTecnico", tecnicoRepository.findAll());
+            return "tecnico/editForm";
 
         }
-        /*if(employee.getId()==0){
-            System.out.println(employee.getFirstName());
-            attributes.addFlashAttribute("mensaje","Empleado creado exitosamente");
-        }else{
-            attributes.addFlashAttribute("mensaje","Empleado actualizado exitosamente");
-        }
-        employeeRepository.save(employee);
-
-        return "redirect:/employee";*/
     }
+
     @GetMapping("/editar")
-    public String editarEmpleado(@ModelAttribute("employee") Employee employee,Model model,@RequestParam("id") int id){
-        Optional<Employee> employeeOptional=employeeRepository.findById(id);
-        if(employeeOptional.isPresent()){
-            employee=employeeOptional.get();
-            model.addAttribute("employee",employee);
-            model.addAttribute("listaEmpleado",employeeRepository.findAll());
-            model.addAttribute("listaDepartamento",departmentRepository.findAll());
-            model.addAttribute("listaPuesto",jobRepository.findAll());
-            return "employee/editEmployee";
-        }else{
-            return "redirect:/employee";
+    public String editarTecnico(@ModelAttribute("tecnico") Tecnico tecnico, Model model, @RequestParam("id") int id) {
+        Optional<Tecnico> tecnicoOptional = tecnicoRepository.findById(id);
+        if (tecnicoOptional.isPresent()) {
+            tecnico = tecnicoOptional.get();
+            model.addAttribute("tecnico", tecnico);
+            model.addAttribute("listaTecnico", tecnicoRepository.findAll());
+            return "tecnico/editForm";
+        } else {
+            return "redirect:/tecnico";
         }
     }
-
-
-    @GetMapping("/borrar")
-    public String borrarEmpleado(Model model,@RequestParam("id") int id,
-                                 RedirectAttributes attributes){
-        Optional<Employee> employeeOptional=employeeRepository.findById(id);
-        if(employeeOptional.isPresent()){
-            employeeRepository.deleteById(id);
-            attributes.addFlashAttribute("mensaje","Empleado borrado exitosamente");
-        }
-        return "redirect:/employee";
-
-    }
-
 }
 
 
-}
+
+
